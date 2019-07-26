@@ -1,0 +1,17 @@
+---
+driver:
+  name: ec2
+
+platforms:
+  - name: ubuntu-18.04
+
+provisioner:
+  hosts: all
+  idempotency_test: true
+  name: ansible_playbook
+
+suites:
+  - name: default
+
+verifier:
+  name: inspec

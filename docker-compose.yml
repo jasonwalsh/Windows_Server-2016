@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  kitchen:
+    build:
+      context: .
+      dockerfile: dockerfiles/kitchen/Dockerfile
+    command: test
+    environment: &environment
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    volumes: &volumes
+      - .:/workspace
+
+  packer:
+    build:
+      context: .
+      dockerfile: dockerfiles/packer/Dockerfile
+    command: build template.json
+    environment: *environment
+    volumes: *volumes
+    working_dir: /workspace
